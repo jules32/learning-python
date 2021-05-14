@@ -1,0 +1,114 @@
+---
+title: "Carpentries Python Ecology Lessons"
+output: html_document
+---
+
+Learning Python with https://datacarpentry.org/python-ecology-lesson
+
+## RStudio setup
+```{r setup}
+library(reticulate)
+library(here)
+setwd(here("intro-python"))
+
+## install libraries I don't yet have in my `r-reticulate` environment
+# py_install("plotnine")
+```
+
+## Ch 8: Plotting with `plotnine`
+
+https://datacarpentry.org/python-ecology-lesson/07-visualization-ggplot-python/index.html
+
+> "Python has powerful built-in plotting capabilities such as matplotlib, but for this episode, we will be using the plotnine package, which facilitates the creation of highly-informative plots of structured data based on the R implementation of ggplot2 and The Grammar of Graphics by Leland Wilkinson. The plotnine package is built on top of Matplotlib and interacts well with Pandas."
+
+```{python}
+## import libraries
+import plotnine as p9
+import pandas as pd
+
+## import data 
+surveys_complete = pd.read_csv('surveys.csv')
+surveys_complete = surveys_complete.dropna() ## not great practice!!
+
+## explore data
+surveys_complete.head() # first five 
+surveys_complete.tail(7) # last seven
+surveys_complete.describe() # summary descriptions for numerics
+pd.unique(surveys_complete['species_id'])
+# More to do with inspecting pandas data frames here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html
+
+## plotting with plotnine ----
+## Python syntax notes: highest-level () below lets you use multiple lines and indentation
+## p9.ggplot is the LibraryName.FunctionName Python syntax
+
+## 1. scatterplot
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length')) + 
+           p9.geom_point())
+           
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length')) + 
+           p9.geom_point(alpha = 0.1))
+           
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length')) + 
+           p9.geom_point(alpha=0.1, color = 'blue'))
+
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length', color = 'species_id')) + 
+           p9.geom_point(alpha=0.1))
+
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length', color = 'species_id')) + 
+           p9.geom_point(alpha=0.1) + 
+           p9.facet_wrap('sex'))
+     
+
+## 2. bar graph
+(p9.ggplot(surveys_complete, p9.aes(x='plot_id'))
+    + p9.geom_bar())
+
+    
+```
+
+**Notes on ggplot2** 
+
+https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+
+1. Announce you’re using ggplot
+2. What data frame are you getting the variables from? 
+3. What variable(s) do you want to plot?
+4. What type of graph do you want to make (geom_)?
+
+## Ch 3 Index, Slice, Subset
+
+```{python}
+## load libraries
+import pandas as pd
+
+# Read in the data
+surveys_df = pd.read_csv("surveys.csv")
+
+## explore data
+surveys_df.head()
+
+## select by column -- by name.
+surveys_df['species_id'] # equivalent
+surveys_df.species_id    # equivalent
+surveys_df[['plot_id', 'species_id']]
+
+## python uses 0-based indexing. So, it's 0, 1, 2. Not 1, 2, 3. 
+## Protip::: do not select or slice by number. Why? What is easier for you to understand? 
+
+# select columns by number (use `iloc` function for integer-based indexing)
+surveys_df.iloc[:, [0, 5]]
+
+# select columns by label (use `loc` function for label-based indexing)
+surveys_df.loc[:, ['record_id', 'species_id']]
+
+
+```
+
+**Note:: copying objects vs referencing objects**
+
+You might think that the code ref_surveys_df = surveys_df creates a fresh distinct copy of the surveys_df DataFrame object. However, using the = operator in the simple statement y = x does not create a copy of our DataFrame. Instead, y = x creates a new variable y that references the same object that x refers to. To state this another way, there is only one object (the DataFrame), and both x and y refer to it.
+
+In contrast, the copy() method for a DataFrame creates a true copy of the DataFrame.
+
+

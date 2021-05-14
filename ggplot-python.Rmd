@@ -1,0 +1,86 @@
+# ggplot with Python
+
+```{r}
+# reticulate lets you run python from R
+library(reticulate)
+```
+
+Examples from https://towardsdatascience.com/how-to-use-ggplot2-in-python-74ab8adec129
+
+```{python}
+import pandas as pd
+import numpy as np
+from pandas.api.types import CategoricalDtype
+from plotnine import *
+from plotnine.data import mpg
+%matplotlib inline
+
+(ggplot(mpg)         # defining what data to use
+ + aes(x='class')    # defining what variable to use
+ + geom_bar(size=20) # defining the type of plot to use
+)
+
+```
+
+```{python}
+(ggplot(mpg)
+ + aes(x='class')
+ + geom_bar(size=20)
+ + coord_flip()        # flipping the x- and y-axes
+ + labs(title='Number of Vehicles per Class', x='Vehicle Class', y='Number of Vehicles') # customizing labels
+)
+```
+
+Examples from https://datacarpentry.org/python-ecology-lesson/07-visualization-ggplot-python/index.html
+
+
+```{python}
+## import libraries
+from plotnine import *
+import pandas as pd
+
+## import data 
+surveys_complete = pd.read_csv('surveys.csv')
+surveys_complete = surveys_complete.dropna() ## not great practice!!
+
+## explore data
+surveys_complete.head() # first five 
+surveys_complete.tail(7) # last seven
+surveys_complete.describe() # summary descriptions for numerics
+pd.unique(surveys_complete['species_id'])
+# More to do with inspecting pandas data frames here: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html
+
+## plotting with plotnine ----
+## Python syntax notes: highest-level () below lets you use multiple lines and indentation
+## p9.ggplot is the LibraryName.FunctionName Python syntax
+
+## 1. scatterplot
+(ggplot(surveys_complete, aes(x='weight', y='hindfoot_length')) + 
+           geom_point())
+           
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length')) + 
+           p9.geom_point(alpha = 0.1))
+           
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length')) + 
+           p9.geom_point(alpha=0.1, color = 'blue'))
+
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length', color = 'species_id')) + 
+           p9.geom_point(alpha=0.1))
+
+(p9.ggplot(surveys_complete, p9.aes(x='weight', y='hindfoot_length', color = 'species_id')) + 
+           p9.geom_point(alpha=0.1) + 
+           p9.facet_wrap('sex'))
+     
+
+## 2. bar graph
+(p9.ggplot(surveys_complete, p9.aes(x='plot_id'))
+    + p9.geom_bar())
+
+    
+```
+
+```
+
+
+```
+

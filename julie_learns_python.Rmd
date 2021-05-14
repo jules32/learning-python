@@ -1,0 +1,137 @@
+---
+title: "Julie learning Python"
+author: "Julie Lowndes"
+date: "6/12/2020"
+output: html_document
+---
+
+## Summary
+
+I want to learn Python from RStudio, since I already use RStudio as a workflow with R and GitHub. I know it is possible to run Python from RStudio and RMarkdown and I am trying this for myself here. 
+
+## Setup
+
+First, I had to download and install: 
+
+1. Python: <https://www.python.org/downloads/>
+1. Anaconda: <https://www.anaconda.com/products/individual#macos>
+
+Then I could do the following in R:
+
+https://rstudio.github.io/reticulate/.
+
+```{r setup, message=FALSE}
+## load R libraries
+library(reticulate) #install.packages("reticulate")
+
+## check reticulate and python
+use_python("/usr/local/bin/python")
+Sys.which("python") # "/usr/bin/python" just checking
+
+## set up a python environment: create new environment (https://rstudio.github.io/reticulate/articles/python_packages.html)
+# create a new environment 
+conda_create("r-reticulate")
+
+# install pandas
+conda_install("r-reticulate", "pandas")
+
+```
+
+
+## Python Recipe
+
+Walk through [
+Python Recipe: Open a file, read it, print matching lines](https://palewi.re/posts/2008/04/05/python-recipe-open-a-file-read-through-it-print-each-line-matching-a-search-term/)
+
+However! This is from 2008 so I expect a few things to be outdated. Particularly since there will likely be something with Python 3 vs 2. 
+
+Step 1-2:
+New link: http://www.gutenberg.org/cache/epub/1041/pg1041.txt
+
+I downloaded this by hand after `curl` did not capture the text.
+
+Skip step 3
+
+Step 4: 
+
+Will need to do something about filepath. Here I've changed the working directory in R. 
+
+```{r, eval=FALSE}
+dir.create('intro-python/py-search')
+setwd('intro-python/py-search')
+```
+
+Copy-paste in a Python chunk:
+
+Note: to run it you can't do command-enter because it will quit Python and go back to R.
+
+Also note: the `print()` function was hanging, and I looked on Stack Overflow: 
+https://stackoverflow.com/questions/6159900/correct-way-to-write-line-to-file
+
+```{python}
+#!/usr/bin/env python
+
+import re
+
+shakes = open("pg1041.txt", "r")
+love = open("love.txt", "w")
+
+for line in shakes:
+    if re.match("(.*)(L|l)ove(.*)", line):
+        print(line)  
+        love.write(line)
+```
+
+Hitting return will then get your cursor back and also print the line numbers. 
+
+Try sourcing .py script from R
+
+```{r}
+source_python('love_test.py') 
+
+ggplot(r$love...)
+```
+
+
+
+
+## Quick Intro Pandas
+
+Walk through this [quick intro to pandas](https://towardsdatascience.com/a-quick-introduction-to-the-pandas-python-library-f1b678f34673), recommended by Oliver Tam.
+
+Note: when I run this whole chunk, it asks to install a newer version of Miniconda (in the Console), png (as a dialogue that then executed in the Jobs tab), and a few other Pythony things. I said yes to each of them.
+
+```{python}
+## importing libraries
+import pandas as pd 
+import numpy as np 
+
+## reading in data. Functions have this structure: pd.read_filetype().
+pd.read_csv("../gene_expression_from_table/expression_tables/gene_counts.csv")
+
+## converting other Python objects (lists, dictionaries, etc) into dataframe: pd.DataFrame()
+
+## saving your dataframe to output: df.to_filetype(filename)
+## NOTE: since x is in the function call (x.to_csv), you don't need it as a variable
+x = pd.read_csv("../gene_expression_from_table/expression_tables/gene_counts.csv")
+x.to_csv("../gene_expression_from_table/jules32/testing_save_to_csv2.csv")
+
+
+```
+
+### Other practice from Allison: 
+```{python}
+# Create the function:
+def subtract_this(arg1, arg2):
+  solution = arg1 - arg2
+  print(solution)
+  
+subtract_this(100, 2)
+
+# Example 1: print a list with a for loop
+dogs = ["teddy", "khora", "maggie"]
+# Run a for loop to print them: 
+for i in dogs: 
+  print(i)
+```
+
