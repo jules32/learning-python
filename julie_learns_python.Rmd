@@ -9,6 +9,8 @@ output: html_document
 
 I want to learn Python from RStudio, since I already use RStudio as a workflow with R and GitHub. I know it is possible to run Python from RStudio and RMarkdown and I am trying this for myself here. 
 
+Reviewed 2021-05-14 when brought into this repo: <https://github.com/jules32/learning-python>
+
 ## Setup
 
 First, I had to download and install: 
@@ -57,8 +59,8 @@ Step 4:
 Will need to do something about filepath. Here I've changed the working directory in R. 
 
 ```{r, eval=FALSE}
-dir.create('intro-python/py-search')
-setwd('intro-python/py-search')
+dir.create('py-search')
+setwd('py-search')
 ```
 
 Copy-paste in a Python chunk:
@@ -89,10 +91,8 @@ Try sourcing .py script from R
 ```{r}
 source_python('love_test.py') 
 
-ggplot(r$love...)
+# ggplot(r$love...)
 ```
-
-
 
 
 ## Quick Intro Pandas
@@ -101,7 +101,7 @@ Walk through this [quick intro to pandas](https://towardsdatascience.com/a-quick
 
 Note: when I run this whole chunk, it asks to install a newer version of Miniconda (in the Console), png (as a dialogue that then executed in the Jobs tab), and a few other Pythony things. I said yes to each of them.
 
-```{python}
+```{python, error=TRUE}
 ## importing libraries
 import pandas as pd 
 import numpy as np 
