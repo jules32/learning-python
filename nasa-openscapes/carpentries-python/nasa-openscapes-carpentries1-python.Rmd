@@ -1,0 +1,83 @@
+---
+title: "NASA Openscapes Carpentries1"
+author: "Julie Lowndes"
+date: "5/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Intro to Python May 2021
+
+
+<https://virdi.github.io/2021-05-17-openscapes-online/>
+
+<https://swcarpentry.github.io/shell-novice/setup.html>
+
+[Bia's awesome slides](https://docs.google.com/presentation/d/1YEIvzHosnnrBkqvgDafal8JwGvjh9A7dsD5dQYg4DcY/edit#slide=id.g8954b9e7ca_7_53)
+
+
+## RStudio setup
+```{r setup}
+library(reticulate)
+library(here)
+setwd(here("nasa-openscapes/carpentries-python"))
+
+```
+
+```{python}
+5*2
+weight_kg = 60
+print(weight_kg)
+print('weight in pounds', 2.2 * weight_kg)
+
+jedi1, jedi2 = 'Luke', 'Obi-Wan'
+print(jedi1, jedi2)
+print(jedi1)
+
+first, second = 'computing',' cloud'
+print(first, second)
+thrid, fourth = second, first
+print(thrid, fourth)
+```
+
+
+```{python}
+project_name = 'open science'
+
+new = project_name[5:12]
+print(new)
+
+```
+
+
+```{python}
+import numpy as np
+
+## np.loadtxt # this is like "blender.crush_ice()
+
+np.loadtxt(fname='data/inflammation-01.csv', delimiter=',')
+np.loadtxt? # what does this function do?
+np. # tab will complete to help you figure out what functions exit
+dir(np) # will show every property that that object has
+
+
+data = np.loadtxt(fname='data/inflammation-01.csv', delimiter=',')
+data.dtype
+print(data) # an array
+
+# to get the 3rd row and 2nd column: 
+data[2,1]
+
+data[1:4, 5:10]
+
+np.mean(data)
+
+patient_0 = data[0, :] # slice the first row
+patient_0.shape 
+np.max(patient_0)
+
+```
+
