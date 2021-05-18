@@ -16,7 +16,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <https://swcarpentry.github.io/shell-novice/setup.html>
 
+<https://pad.carpentries.org/2021-05-17-openscapes-online>
+
 [Bia's awesome slides](https://docs.google.com/presentation/d/1YEIvzHosnnrBkqvgDafal8JwGvjh9A7dsD5dQYg4DcY/edit#slide=id.g8954b9e7ca_7_53)
+
+Bia's recommended juypter notbook cheatsheet: [Download from Edureka ](https://www.edureka.co/blog/wp-content/uploads/2018/10/Jupyter_Notebook_CheatSheet_Edureka.pdf)
+
 
 
 ## RStudio setup
@@ -80,4 +85,54 @@ patient_0.shape
 np.max(patient_0)
 
 ```
+
+## install python module "matplotlib"
+<https://swcarpentry.github.io/python-novice-inflammation/03-matplotlib/index.html>
+
+```{r}
+py_install("matplotlib")
+```
+
+No non-system installation of Python could be found.
+Would you like to download and install Miniconda?
+Miniconda is an open source environment management system for Python.
+See https://docs.conda.io/en/latest/miniconda.html for more details.
+
+Would you like to install Miniconda? [Y/n]: y
+
+
+```{python}
+import matplotlib.pyplot as plt # if error install above in R
+
+image = plt.imshow(data)
+
+
+ave_inflammation = np.mean(data, axis=0)
+ave_plot = plt.plot(ave_inflammation)
+plt.show()
+
+```
+
+```{python}
+agency = "NASA"
+print(agency[0])
+print(agency[1])
+print(agency[2])
+print(agency[3])
+
+jedi_name = 'Luke Skywalker'
+i = 0
+for char in jedi_name:
+  print(i)
+  i = i+1
+
+```
+
+
+```{python}
+import glob
+```
+
+
+
 
